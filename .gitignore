@@ -76,3 +76,4 @@ public
 Thumbs.db
 
 .idea
+.env.sample
