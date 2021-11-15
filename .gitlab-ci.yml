@@ -3,7 +3,6 @@ image: node:lts
 stages:
   - build
   - test
-  - compile
   - deploy
 
 variables:
@@ -12,7 +11,7 @@ variables:
   CACHE_COMPRESSION_LEVEL: fastest
   TRANSFER_METER_FREQUENCY: 5s
   NETLIFY_AUTH_TOKEN: $NETLIFY_AUTH_TOKEN
-  NETLIFY_API_ID: $NETLIFY_API_ID
+  NETLIFY_SITE_ID: $NETLIFY_SITE_ID
 
 
 cache:
@@ -57,21 +56,12 @@ jest:
 
   allow_failure: false
 
-compile:
-  stage: compile
-
-  script: 
-    - npm run build
-
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-    - when: always
-
-deploy:
+compile-deploy:
   stage: deploy
 
   script:
-    - npx netlify-cli deploy --site $NETLIFY_API_ID --auth $NETLIFY_AUTH_TOKEN --prod
+    - npm run build
+    - npx netlify-cli deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
 
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
