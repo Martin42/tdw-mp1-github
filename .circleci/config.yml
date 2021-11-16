@@ -20,7 +20,7 @@ jobs:
         
     steps:
       - checkout
-      - run: npm run prettier
+      - npm-run: prettier
 
 # Orchestrate our job run sequence
 workflows:
