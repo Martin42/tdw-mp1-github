@@ -14,7 +14,7 @@ jobs:
     steps:
       - checkout
       - run: npm install
-  test:
+  prettier:
     docker:
       - image: cimg/node:17.1.0
         
@@ -23,12 +23,34 @@ jobs:
       - node/install-packages
       - run:
           command: npm run prettier
+    
+  jest:
+    docker:
+      - image: cimg/node:17.1.0
+        
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm run test
+
+  lint:
+    docker:
+      - image: cimg/node:17.1.0
+        
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm run lint
 
 # Orchestrate our job run sequence
 workflows:
   build_and_test:
     jobs:
       - install
-      - test:
+      - prettier:
           requires:
             - install
+      - jest
+      - lint
