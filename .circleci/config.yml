@@ -52,7 +52,26 @@ jobs:
           command: npm run build 
       - run:
           command: npx netlify-cli deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
-    
+
+  build:
+    docker:
+      - image: cimg/node:17.1.0
+
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm install
+      - run:
+          command: npm run prettier
+      - run:
+          command: npm run test
+      - run:
+          command: npm run lint
+      - run:
+          command: npm run build
+      - run:
+          command: npx netlify-cli deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
             
 # Orchestrate our job run sequence
 workflows:
