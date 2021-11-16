@@ -44,6 +44,15 @@ jobs:
       - run:
           command: npm run lint
 
+  deploy:
+    docker:
+      - image: cimg/node:17.1.0
+        
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: echo " buenas"
 # Orchestrate our job run sequence
 workflows:
   build_and_test:
@@ -58,3 +67,8 @@ workflows:
       - lint:
           requires:
             - install
+      - deploy:
+          requires:
+            - prettier
+            - jest
+            - lint
