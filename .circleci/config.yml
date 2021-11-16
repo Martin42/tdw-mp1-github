@@ -54,10 +54,7 @@ jobs:
           command: npm run build 
       - run:
           command: npx netlify-cli deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
-    filters:
-      branches:
-        only:
-          - master
+    
             
 # Orchestrate our job run sequence
 workflows:
@@ -78,6 +75,10 @@ workflows:
             - prettier
             - jest
             - lint
+          filters:
+            branches:
+              only:
+                - master
   nightly:
     triggers:
       - schedule:
