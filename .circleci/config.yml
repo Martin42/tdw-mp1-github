@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  prettier: cfra/prettier@0.1.1
+  prettier: ory/prettier@0.0.11
 
 # Define the jobs we want to run for this project
 jobs:
